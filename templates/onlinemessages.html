@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Series</th>
+                                <th>Message</th>
+                                <th>Time</th>
+                            </tr>
+
+                            {% for message in messages %}
+                           <tr>
+                               <td>{{ message.id }}</td>
+                               <td>{{ message.name }}</td>
+                               <td>{{ message.department }}</td>
+                               <td>{{ message.series }}</td>
+                               <td>{{ message.message }}</td>
+                               <td>Time will go here</td>
+                           </tr>
+
+                        {% endfor %}
+                    </table>
+
+                </div>
+
+
+
+{% endblock %}
+
+
+
+
+
