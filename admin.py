@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import peewee
 from peewee import *
+import datetime, time
 
 db = MySQLDatabase('radioruet_api', user='root', passwd='92702689')
 
@@ -20,7 +21,7 @@ class SecretMsg(peewee.Model):
         database = db
 
 #db.create_table(SecretMsg)
-
+#db.create_table(OnlineMsg)
 
 app = Flask(__name__)
 
@@ -51,5 +52,27 @@ def logout():
     return "Logout"
 
 
+@app.route('/setonlinemsg', methods=['POST'])
+def setonlinemsg():
+    name = request.form.get('name')
+    department = request.form.get('department')
+    series = request.form.get('series')
+    message = request.form.get('message')
+    onlnmsg = OnlineMsg(name=name, department=department, series=series, message=message)
+    onlnmsg.save()
+    return "Saved"
+
+@app.route('/setsecretmsg', methods=['POST'])
+def setsecretmsg():
+
+    message = request.form.get('message')
+    curr_time = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+
+    scrtmsg = SecretMsg(msg=message, time=curr_time)
+    scrtmsg.save()
+    return "Saved"
+
+
+
 if __name__=="__main__":
-    app.run(port=5001)
+    app.run(port=5000)
